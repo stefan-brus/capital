@@ -10,12 +10,18 @@ class NumericView {
 
     create() {
         const element = document.createElement("p");
-        element.innerHTML = `${this.label}: <span id="numeric-view-${this.name}">0</span>`;
+        const labelText = document.createTextNode(`${this.label}: `);
+        element.appendChild(labelText);
+        this.viewElement = document.createElement("span");
+        this.viewElement.id = `numeric-view-${this.name}`;
+        const initVal = 0;
+        this.viewElement.textContent = this.isDecimal ? initVal.toFixed(2) : initVal;
+        element.appendChild(this.viewElement);
         this.parentElement.appendChild(element);
     }
 
     update() {
         const newVal = this.updater();
-        document.getElementById(`numeric-view-${this.name}`).textContent = this.isDecimal ? newVal.toFixed(2) : newVal;
+        this.viewElement.textContent = this.isDecimal ? newVal.toFixed(2) : newVal;
     }
 }
