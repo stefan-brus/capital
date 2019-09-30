@@ -9,8 +9,6 @@ class NumericView {
 
     create() {
         const element = document.createElement("p");
-        //const text = document.createTextNode(`${this.label}: <span id="numeric-view-${this.name}">0</span>`);
-        //element.appendChild(text);
         element.innerHTML = `${this.label}: <span id="numeric-view-${this.name}">0</span>`;
         this.parentElement.appendChild(element);
     }
