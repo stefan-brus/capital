@@ -14,6 +14,6 @@ class NumericView {
     }
 
     update() {
-        document.getElementById(`numeric-view-${this.name}`).textContent = this.updater();
+        document.getElementById(`numeric-view-${this.name}`).textContent = this.updater().toFixed(2);
     }
 }

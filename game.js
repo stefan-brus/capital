@@ -51,12 +51,13 @@ class Game {
             this.state.day++;
         }
 
-        const isLeapYear = (this.state.age % 4) == 0;
+        const isLeapYear = (Math.floor(this.state.age) % 4) == 0;
 
         if ((isLeapYear && this.state.day > 365) || (!isLeapYear && this.state.day > 364)) {
             this.state.day = 0;
-            this.state.age++;
         }
+
+        this.state.age += 1 / (365.25 * 24);
     }
 
     // --- ENTRY POINT ---
