@@ -1,10 +1,11 @@
 class NumericView {
 
-    constructor(name, label, parentElement, updater) {
+    constructor(name, label, parentElement, updater, isDecimal) {
         this.name = name;
         this.label = label;
         this.parentElement = parentElement;
         this.updater = updater;
+        this.isDecimal = isDecimal;
     }
 
     create() {
@@ -14,6 +15,7 @@ class NumericView {
     }
 
     update() {
-        document.getElementById(`numeric-view-${this.name}`).textContent = this.updater().toFixed(2);
+        const newVal = this.updater();
+        document.getElementById(`numeric-view-${this.name}`).textContent = this.isDecimal ? newVal.toFixed(2) : newVal;
     }
 }

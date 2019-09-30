@@ -15,14 +15,14 @@ class Game {
     initViews() {
         const parentElement = document.body;
 
-        this.buildNumericView("capital", "Capital ($)", parentElement, () => this.state.capital);
+        this.buildNumericView("capital", "Capital ($)", parentElement, () => this.state.capital, true);
         this.buildNumericView("hour", "Hour", parentElement, () => this.state.hour);
         this.buildNumericView("day", "Day", parentElement, () => this.state.day);
-        this.buildNumericView("age", "Age", parentElement, () => this.state.age);
+        this.buildNumericView("age", "Age", parentElement, () => this.state.age, true);
     }
 
-    buildNumericView(name, label, parentElement, updater) {
-        const view = new NumericView(name, label, parentElement, updater);
+    buildNumericView(name, label, parentElement, updater, isDecimal = false) {
+        const view = new NumericView(name, label, parentElement, updater, isDecimal);
         view.create();
         this.views.push(view);
     }
