@@ -4,6 +4,8 @@ class AvailableJobs {
         // TODO: Figure out level mechanics. Education/networking?
         this.level = 1;
         this.jobs = [];
+        this.refreshCooldown = 24;
+        this.refreshTimer = this.refreshCooldown;
     }
 
     generate() {
@@ -11,6 +13,12 @@ class AvailableJobs {
         for(let i = 0; i < this.level + 1; i++) {
             this.jobs.push(generateJob(this.level));
         }
+    }
+
+    onRefresh() {
+        this.refreshCooldown *= 1.5;
+        this.refreshTimer = this.refreshCooldown;
+        this.generate();
     }
 }
 

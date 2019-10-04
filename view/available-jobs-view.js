@@ -12,14 +12,33 @@ class AvailableJobsView {
         headerElement.textContent = "Available Jobs";
         this.parentElement.appendChild(headerElement);
 
+        this.refreshContainer = document.createElement("div");
+        this.refreshContainer.id = "available-jobs-refresh-container";
+        this.parentElement.appendChild(this.refreshContainer);
+
+        this.refreshCooldownView = document.createElement("p");
+        this.refreshCooldownView.id = "available-jobs-refresh-cooldown";
+        this.refreshCooldownView.className = "available-jobs-refresh-component"
+        this.refreshContainer.appendChild(this.refreshCooldownView);
+
+        const onRefresh = () => {
+            const available = this.updater();
+            available.onRefresh();
+            this.update(true);
+        }
+        this.refreshButton = new Button("Refresh", this.refreshContainer, onRefresh);
+        this.refreshButton.create();
+        this.refreshButton.buttonDiv.classList.add("available-jobs-refresh-component");
+
         this.containerElement = document.createElement("div");
         this.containerElement.id = "available-jobs-container";
         this.parentElement.appendChild(this.containerElement);
     }
 
     update(refresh = false) {
+        const available = this.updater();
+
         if (refresh) {
-            const available = this.updater();
             this.availableViews = [];
 
             while (this.containerElement.firstChild) {
@@ -36,6 +55,17 @@ class AvailableJobsView {
                 availableJobView.create(i);
                 this.availableViews.push(availableJobView);
             });
+        }
+
+        this.refreshCooldownView.textContent = `Refresh in: ${Math.floor(available.refreshTimer / 24)}d ${available.refreshTimer % 24}h`;
+
+        if (available.refreshTimer == 0) {
+            this.refreshCooldownView.style.display = "none";
+            this.refreshButton.buttonDiv.style.display = "inline-block";
+        }
+        else {
+            this.refreshCooldownView.style.display = "inline-block";
+            this.refreshButton.buttonDiv.style.display = "none";
         }
 
         this.availableViews.forEach(view => view.update());

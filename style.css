@@ -18,6 +18,8 @@
 
 .available-job-view {
     display: inline-block;
+    border: 1px solid black;
+    padding: 10px;
     margin-right: 10px;
     vertical-align: top;
 }
@@ -26,9 +28,15 @@
     font-weight: bold;
 }
 
+.available-jobs-refresh-component {
+    display: inline-block;
+    margin-right: 10px;
+}
+
 /* Components */
 
 .button {
     border: 1px solid black;
+    padding: 5px;
     text-align: center;
 }

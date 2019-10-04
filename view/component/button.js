@@ -7,10 +7,10 @@ class Button {
     }
 
     create() {
-        const buttonDiv = document.createElement("div");
-        buttonDiv.className = "button";
-        buttonDiv.textContent = this.label;
-        buttonDiv.onclick = this.onClick;
-        this.parentElement.appendChild(buttonDiv);
+        this.buttonDiv = document.createElement("div");
+        this.buttonDiv.className = "button";
+        this.buttonDiv.textContent = this.label;
+        this.buttonDiv.onclick = this.onClick;
+        this.parentElement.appendChild(this.buttonDiv);
     }
 }

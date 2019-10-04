@@ -106,6 +106,10 @@ class Game {
         }
 
         this.state.age += this.state.job.stress / (365.25 * 24);
+
+        if (this.state.availableJobs.refreshTimer > 0) {
+            this.state.availableJobs.refreshTimer--;
+        }
     }
 
     // --- ENTRY POINT ---
