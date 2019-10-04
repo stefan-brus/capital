@@ -16,10 +16,8 @@ class AvailableJobsView {
         this.refreshContainer.id = "available-jobs-refresh-container";
         this.parentElement.appendChild(this.refreshContainer);
 
-        this.refreshCooldownView = document.createElement("p");
-        this.refreshCooldownView.id = "available-jobs-refresh-cooldown";
-        this.refreshCooldownView.className = "available-jobs-refresh-component"
-        this.refreshContainer.appendChild(this.refreshCooldownView);
+        this.refreshCooldownView = new TimeRemainingView("available-jobs-refresh", "Refresh in", this.refreshContainer, () => this.updater().refreshTimer);
+        this.refreshCooldownView.create();
 
         const onRefresh = () => {
             const available = this.updater();
@@ -58,14 +56,14 @@ class AvailableJobsView {
             });
         }
 
-        this.refreshCooldownView.textContent = `Refresh in: ${Math.floor(available.refreshTimer / 24)}d ${available.refreshTimer % 24}h`;
+        this.refreshCooldownView.update();
 
         if (available.refreshTimer == 0) {
-            this.refreshCooldownView.style.display = "none";
+            this.refreshCooldownView.element.style.display = "none";
             this.refreshButton.buttonDiv.style.display = "inline-block";
         }
         else {
-            this.refreshCooldownView.style.display = "inline-block";
+            this.refreshCooldownView.element.style.display = "inline-block";
             this.refreshButton.buttonDiv.style.display = "none";
         }
 

@@ -14,3 +14,8 @@
   - Duration is doubled each time
   - Increases available jobs max level by 1
   - Permanently increases base costs of living by 0.01
+- Add flavor:
+  - Different job titles & descriptions
+  - Event texts for example when networking or studying
+- Make the style great (again)
+- Add aging mechanics

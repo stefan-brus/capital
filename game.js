@@ -12,8 +12,11 @@ class Game {
         this.state.day = 0;
         this.state.year = 0;
         this.state.age = 18;
+        this.state.wageFactor = 1.0;
         this.state.baseCosts = 0.01;
+        this.state.costsFactor = 1.0;
         this.state.baseStress = 1.0;
+        this.state.stressFactor = 1.0;
 
         const unemployed = new Job(
             "Unemployed",
@@ -91,15 +94,15 @@ class Game {
     }
 
     getTotalCosts() {
-        return this.state.baseCosts + this.state.job.costs;
+        return this.state.costsFactor * (this.state.baseCosts + this.state.job.costs);
     }
 
     getTotalStress() {
-        return this.state.baseStress * this.state.job.stress;
+        return this.state.stressFactor * this.state.baseStress * this.state.job.stress;
     }
 
     updateCapital() {
-        this.state.capital += this.state.job.wage;
+        this.state.capital += this.state.wageFactor * this.state.job.wage;
         this.state.capital -= this.getTotalCosts();
     }
 

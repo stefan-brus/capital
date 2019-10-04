@@ -16,7 +16,7 @@ class AvailableJobs {
     }
 
     onRefresh() {
-        this.refreshCooldown *= 1.5;
+        this.refreshCooldown *= 2.0;
         this.refreshTimer = this.refreshCooldown;
         this.generate();
     }
