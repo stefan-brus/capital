@@ -25,7 +25,7 @@ class Networking {
         this.duration = 24;
         this.upgradeTimer = 0;
         this.upgradeStarted = false;
-        this.investment = 5.0;
+        this.investment = 1.0;
     }
 
     upgrade() {

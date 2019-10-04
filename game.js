@@ -45,6 +45,7 @@ class Game {
             this.state.stressFactor *= 2.0;
         };
         const onEducationFinished = () => {
+            this.state.wageFactor *= 2.0;
             this.state.costsFactor *= 0.5;
             this.state.stressFactor *= 0.5;
             this.state.availableJobs.maxLevel++;

@@ -1,19 +1,5 @@
 - Make it a proper git repository with issues and stuff
 - Serve everything with a HTTP server
-- Add networking mechanics:
-  - Costs an initial investment of capital (doubles each time)
-  - Doubles total costs of living for duration
-  - Doubles total stress for duration
-  - Duration is doubled each time
-  - Increases available jobs max level by 1
-  - Permanently increases base stress by 0.01
-- Add education mechanics:
-  - Halves wages for duration
-  - Doubles total costs of living for duration
-  - Doubles total stress for duration
-  - Duration is doubled each time
-  - Increases available jobs max level by 1
-  - Permanently increases base costs of living by 0.01
 - Add flavor:
   - Different job titles & descriptions
   - Event texts for example when networking or studying
@@ -30,3 +16,4 @@
 - Gradually enable career upgrades
   - Education becomes available at 10 or so capital
   - New career upgrades every 10x
+- Generate max number of available jobs based on the 2 logarithm of the max level

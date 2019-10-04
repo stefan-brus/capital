@@ -11,7 +11,8 @@ class AvailableJobs {
     generate() {
         this.jobs = [];
         for(let i = 0; i < this.maxLevel + 1; i++) {
-            this.jobs.push(generateJob(this.maxLevel));
+            const jobLevel = Math.floor(Math.random() * this.maxLevel) + 1;
+            this.jobs.push(generateJob(jobLevel));
         }
     }
 
