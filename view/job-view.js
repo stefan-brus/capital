@@ -14,7 +14,7 @@ class JobView {
         this.descriptionElement = document.createElement("p");
         this.parentElement.appendChild(this.descriptionElement);
 
-        this.wageElement = new NumericView("job-wage", "Hourly Wage ($)", this.parentElement, () => this.job.wage, true);
+        this.wageElement = new NumericView("job-wage", "Hourly wage ($)", this.parentElement, () => this.job.wage, true);
         this.wageElement.create();
 
         this.costsElement = new NumericView("job-costs", "Living costs ($)", this.parentElement, () => this.job.costs, true);

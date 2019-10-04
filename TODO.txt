@@ -1,0 +1,14 @@
+- Make it a proper git repository with issues and stuff
+- Serve everything with a HTTP server
+- Add networking mechanics:
+  - Costs an initial investment of capital (doubles each time)
+  - Doubles costs of living for duration
+  - Doubles stress for duration
+  - Duration is doubled each time
+  - Increases available jobs max level by 1
+- Add education mechanics:
+  - Halves wages for duration
+  - Doubles costs of living for duration
+  - Doubles stress for duration
+  - Duration is doubled each time
+  - Increases available jobs max level by 1

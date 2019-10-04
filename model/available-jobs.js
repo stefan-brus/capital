@@ -2,7 +2,7 @@ class AvailableJobs {
 
     constructor() {
         // TODO: Figure out level mechanics. Education/networking?
-        this.level = 1;
+        this.maxLevel = 1;
         this.jobs = [];
         this.refreshCooldown = 24;
         this.refreshTimer = this.refreshCooldown;
@@ -10,8 +10,8 @@ class AvailableJobs {
 
     generate() {
         this.jobs = [];
-        for(let i = 0; i < this.level + 1; i++) {
-            this.jobs.push(generateJob(this.level));
+        for(let i = 0; i < this.maxLevel + 1; i++) {
+            this.jobs.push(generateJob(this.maxLevel));
         }
     }
 

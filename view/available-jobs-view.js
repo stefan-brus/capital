@@ -8,9 +8,9 @@ class AvailableJobsView {
     }
 
     create() {
-        const headerElement = document.createElement("h2");
-        headerElement.textContent = "Available Jobs";
-        this.parentElement.appendChild(headerElement);
+        this.headerElement = document.createElement("h2");
+        this.headerElement.textContent = "Available Jobs";
+        this.parentElement.appendChild(this.headerElement);
 
         this.refreshContainer = document.createElement("div");
         this.refreshContainer.id = "available-jobs-refresh-container";
@@ -37,6 +37,7 @@ class AvailableJobsView {
 
     update(refresh = false) {
         const available = this.updater();
+        this.headerElement.textContent = `Available Jobs (Max level: ${available.maxLevel})`;
 
         if (refresh) {
             this.availableViews = [];
