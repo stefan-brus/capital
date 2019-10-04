@@ -3,10 +3,14 @@ class Game {
     // --- INIT LOGIC ---
 
     constructor() {
+        // TODO: Figure out better state version handling
+        const VERSION = 1;
         this.state = {};
+        this.state.version = VERSION;
         this.state.capital = 0;
         this.state.hour = 0;
         this.state.day = 0;
+        this.state.year = 0;
         this.state.age = 18;
 
         const unemployed = new Job(
@@ -18,6 +22,8 @@ class Game {
         );
 
         this.state.job = unemployed;
+        this.state.availableJobs = new AvailableJobs();
+        this.state.availableJobs.generate();
 
         this.views = [];
     }
@@ -30,6 +36,7 @@ class Game {
         this.buildNumericView("capital", "Capital ($)", statsDiv, () => this.state.capital, true);
         this.buildNumericView("hour", "Hour", statsDiv, () => this.state.hour);
         this.buildNumericView("day", "Day", statsDiv, () => this.state.day);
+        this.buildNumericView("year", "Year", statsDiv, () => this.state.year);
         this.buildNumericView("age", "Age", statsDiv, () => this.state.age, true);
 
         const jobDiv = document.createElement("div");
@@ -37,6 +44,12 @@ class Game {
         document.body.appendChild(jobDiv);
 
         this.buildJobView(jobDiv, () => this.state.job);
+
+        const availableDiv = document.createElement("div");
+        availableDiv.id = "available-jobs-layout";
+        document.body.appendChild(availableDiv);
+
+        this.buildAvailableJobsview(availableDiv, () => this.state.availableJobs);
     }
 
     buildNumericView(name, label, parentElement, updater, isDecimal = false) {
@@ -48,6 +61,13 @@ class Game {
     buildJobView(parentElement, updater) {
         const view = new JobView(parentElement, updater);
         view.create();
+        this.views.push(view);
+    }
+
+    buildAvailableJobsview(parentElement, updater) {
+        const view = new AvailableJobsView(parentElement, updater);
+        view.create();
+        view.update(true);
         this.views.push(view);
     }
 
@@ -81,6 +101,7 @@ class Game {
 
         if (this.state.day > 364) {
             this.state.day = 0;
+            this.state.year++;
         }
 
         this.state.age += this.state.job.stress / (365.25 * 24);
@@ -90,7 +111,7 @@ class Game {
 
     run() {
         const savedState = JSON.parse(localStorage.getItem("state"));
-        if (savedState) {
+        if (savedState && savedState.version == this.state.version) {
             this.state = savedState;
         }
 

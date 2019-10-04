@@ -15,3 +15,13 @@
 #job-name-view {
     font-weight: bold;
 }
+
+.available-job-view {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: top;
+}
+
+.available-job-name-view {
+    font-weight: bold;
+}

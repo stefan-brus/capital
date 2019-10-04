@@ -8,7 +8,7 @@ class AvailableJobs {
 
     generate() {
         this.jobs = [];
-        for(i = 0; i < this.level + 1; i++) {
+        for(let i = 0; i < this.level + 1; i++) {
             this.jobs.push(generateJob(this.level));
         }
     }

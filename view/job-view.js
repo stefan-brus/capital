@@ -14,27 +14,24 @@ class JobView {
         this.descriptionElement = document.createElement("p");
         this.parentElement.appendChild(this.descriptionElement);
 
-        this.wageElement = document.createElement("p");
-        this.parentElement.appendChild(this.wageElement);
+        this.wageElement = new NumericView("job-wage", "Hourly Wage ($)", this.parentElement, () => this.job.wage, true);
+        this.wageElement.create();
 
-        this.costsElement = document.createElement("p");
-        this.parentElement.appendChild(this.costsElement);
+        this.costsElement = new NumericView("job-costs", "Living costs ($)", this.parentElement, () => this.job.costs, true);
+        this.costsElement.create();
 
-        this.stressElement = document.createElement("p");
-        this.parentElement.appendChild(this.stressElement);
+        this.stressElement = new NumericView("job-stress", "Stress factor", this.parentElement, () => this.job.stress, true);
+        this.stressElement.create();
+
     }
 
     update() {
-        // Only update if the job was changed
-        const oldName = this.job.name;
         this.job = this.updater();
 
-        if (this.job.name != oldName) {
-            this.nameElement.textContent = this.job.name;
-            this.descriptionElement.textContent = this.job.description;
-            this.wageElement.textContent = `Hourly wage (\$): ${this.job.wage.toFixed(2)}`;
-            this.costsElement.textContent = `Living costs (\$): ${this.job.costs.toFixed(2)}`;
-            this.stressElement.textContent = `Stress factor: ${this.job.stress.toFixed(2)}`;
-        }
+        this.nameElement.textContent = this.job.name;
+        this.descriptionElement.textContent = this.job.description;
+        this.wageElement.update();
+        this.costsElement.update();
+        this.stressElement.update();
     }
 }
