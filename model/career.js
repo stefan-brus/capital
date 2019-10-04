@@ -1,57 +1,69 @@
 class Career {
 
-    constructor(state) {
-        this.state = state;
-        this.networking = new Networking(state);
-        this.education = new Education(state);
+    constructor(onNetworkUpgrade, onNetworkFinished, onEducationUpgrade, onEducationFinished) {
+        this.networking = new Networking(onNetworkUpgrade, onNetworkFinished);
+        this.education = new Education(onEducationUpgrade, onEducationFinished);
+    }
+
+    finishCompletedUpgrades() {
+        if (this.networking.upgradeStarted && this.networking.upgradeTimer == 0) {
+            this.networking.onUpgradeFinished();
+        }
+
+        if (this.education.upgradeStarted && this.education.upgradeTimer == 0) {
+            this.education.onUpgradeFinished();
+        }
     }
 }
 
 class Networking {
 
-    constructor(state) {
-        this.state = state;
+    constructor(onNetworkUpgrade, onNetworkFinished) {
+        this.onNetworkUpgrade = onNetworkUpgrade;
+        this.onNetworkFinished = onNetworkFinished;
         this.level = 0;
-        this.isUpgrading = false;
         this.duration = 24;
         this.upgradeTimer = 0;
+        this.upgradeStarted = false;
         this.investment = 5.0;
     }
 
     upgrade() {
-        this.state.capital -= this.investment;
-        this.state.costsFactor *= 2.0;
-        this.state.stressFactor *= 2.0;
+        this.onNetworkUpgrade(this);
+        this.upgradeStarted = true;
+        this.upgradeTimer = this.duration;
     }
 
     onUpgradeFinished() {
-        this.state.costsFactor *= 0.5;
-        this.state.stressFactor *= 0.5;
-        this.state.availableJobs.maxLevel++;
-        this.state.baseStress += 0.01;
+        this.onNetworkFinished(this);
+        this.investment *= 2.0;
+        this.upgradeStarted = false;
+        this.duration *= 2;
+        this.level++;
     }
 }
 
 class Education {
 
-    constructor(state) {
-        this.state = state;
+    constructor(onEducationUpgrade, onEducationFinished) {
+        this.onEducationUpgrade = onEducationUpgrade;
+        this.onEducationFinished = onEducationFinished;
         this.level = 0;
-        this.isUpgrading = false;
         this.duration = 24;
         this.upgradeTimer = 0;
+        this.upgradeStarted = false;
     }
 
     upgrade() {
-        this.state.wageFactor *= 0.5;
-        this.state.costsFactor *= 2.0;
-        this.state.stressFactor *= 2.0;
+        this.onEducationUpgrade(this);
+        this.upgradeStarted = true;
+        this.upgradeTimer = this.duration;
     }
 
     onUpgradeFinished() {
-        this.state.costsFactor *= 0.5;
-        this.state.stressFactor *= 0.5;
-        this.state.availableJobs.maxLevel++;
-        this.state.baseCosts += 0.01;
+        this.onEducationFinished(this);
+        this.upgradeStarted = false;
+        this.duration *= 2;
+        this.level++;
     }
 }

@@ -4,7 +4,7 @@ class Game {
 
     constructor() {
         // TODO: Figure out better state version handling
-        const VERSION = 2;
+        const VERSION = 3;
         this.state = {};
         this.state.version = VERSION;
         this.state.capital = 0;
@@ -27,6 +27,31 @@ class Game {
         );
 
         this.state.job = unemployed;
+
+        const onNetworkUpgrade = (networking) => {
+            this.state.capital -= networking.investment;
+            this.state.costsFactor *= 2.0;
+            this.state.stressFactor *= 2.0;
+        };
+        const onNetworkFinished = () => {
+            this.state.costsFactor *= 0.5;
+            this.state.stressFactor *= 0.5;
+            this.state.availableJobs.maxLevel++;
+            this.state.baseStress += 0.01;
+        };
+        const onEducationUpgrade = () => {
+            this.state.wageFactor *= 0.5;
+            this.state.costsFactor *= 2.0;
+            this.state.stressFactor *= 2.0;
+        };
+        const onEducationFinished = () => {
+            this.state.costsFactor *= 0.5;
+            this.state.stressFactor *= 0.5;
+            this.state.availableJobs.maxLevel++;
+            this.state.baseCosts += 0.01;
+        };
+        this.state.career = new Career(onNetworkUpgrade, onNetworkFinished, onEducationUpgrade, onEducationFinished);
+
         this.state.availableJobs = new AvailableJobs();
         this.state.availableJobs.generate();
 
@@ -52,6 +77,12 @@ class Game {
 
         this.buildJobView(jobDiv, () => this.state.job);
 
+        this.careerDiv = document.createElement("div");
+        this.careerDiv.id = "career-layout";
+        document.body.appendChild(this.careerDiv);
+
+        this.buildCareerView(this.careerDiv, () => this.state.career);
+
         const availableDiv = document.createElement("div");
         availableDiv.id = "available-jobs-layout";
         document.body.appendChild(availableDiv);
@@ -71,6 +102,12 @@ class Game {
         this.views.push(view);
     }
 
+    buildCareerView(parentElement, updater) {
+        const view = new CareerView(parentElement, updater);
+        view.create();
+        this.views.push(view);
+    }
+
     buildAvailableJobsview(parentElement, updater) {
         const onHire = job => this.state.job = job;
         const view = new AvailableJobsView(parentElement, updater, onHire);
@@ -85,8 +122,15 @@ class Game {
         // UPDATE
         this.updateCapital();
         this.updateTime();
+        this.state.career.finishCompletedUpgrades();
 
         // RENDER
+        if (this.state.job.name == "Unemployed") {
+            this.careerDiv.style.display = "none";
+        }
+        else {
+            this.careerDiv.style.display = "inline";
+        }
         this.views.forEach(view => view.update());
 
         // SAVE
@@ -125,6 +169,13 @@ class Game {
         if (this.state.availableJobs.refreshTimer > 0) {
             this.state.availableJobs.refreshTimer--;
         }
+
+        if (this.state.career.networking.upgradeTimer > 0) {
+            this.state.career.networking.upgradeTimer--;
+        }
+        if (this.state.career.education.upgradeTimer > 0) {
+            this.state.career.education.upgradeTimer--;
+        }
     }
 
     // --- ENTRY POINT ---
@@ -147,7 +198,24 @@ class Game {
         this.state.day = saved.day;
         this.state.year = saved.year;
         this.state.age = saved.age;
+        this.state.wageFactor = saved.wageFactor;
+        this.state.baseCosts = saved.baseCosts;
+        this.state.costsFactor = saved.costsFactor;
+        this.state.baseStress = saved.baseStress;
+        this.state.stressFactor = saved.stressFactor;
+
         this.state.job = saved.job;
+
+        this.state.career.networking.level = saved.career.networking.level;
+        this.state.career.networking.duration = saved.career.networking.duration;
+        this.state.career.networking.upgradeTimer = saved.career.networking.upgradeTimer;
+        this.state.career.networking.upgradeStarted = saved.career.networking.upgradeStarted;
+        this.state.career.networking.investment = saved.career.networking.investment;
+
+        this.state.career.education.level = saved.career.education.level;
+        this.state.career.education.duration = saved.career.education.duration;
+        this.state.career.education.upgradeTimer = saved.career.education.upgradeTimer;
+        this.state.career.education.upgradeStarted = saved.career.education.upgradeStarted;
 
         this.state.availableJobs.level = saved.availableJobs.level;
         this.state.availableJobs.jobs = saved.availableJobs.jobs;
