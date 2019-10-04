@@ -165,7 +165,7 @@ class Game {
             this.state.year++;
         }
 
-        this.state.age += this.state.job.stress / (365.25 * 24);
+        this.state.age += this.getTotalStress() / (365 * 24);
 
         if (this.state.availableJobs.refreshTimer > 0) {
             this.state.availableJobs.refreshTimer--;

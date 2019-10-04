@@ -7,7 +7,7 @@
 - Add aging mechanics
 - Add "whatever it takes" button
   - Each click increases capital by 0.01
-  - Each click increases stress by 0.01 for 1 day (stacking, clicking resets the countdown)
+  - Each click increases stress by 0.01 for 1 day (stacking, clicking sets the countdown back by 1 day)
 - Create text view component
 - Reduce code duplication in career view
 - Make buttons respond instantly
@@ -17,3 +17,4 @@
   - Education becomes available at 10 or so capital
   - New career upgrades every 10x
 - Generate max number of available jobs based on the 2 logarithm of the max level
+- Halve the available jobs refresh duration every time a career upgrade is finished
