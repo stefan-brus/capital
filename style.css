@@ -33,6 +33,10 @@
     margin-right: 10px;
 }
 
+#available-jobs-refresh-container {
+    margin-bottom: 10px;
+}
+
 /* Components */
 
 .button {
