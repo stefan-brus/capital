@@ -65,6 +65,7 @@ class Game {
         document.body.appendChild(statsDiv);
 
         this.buildNumericView("capital", "Capital ($)", statsDiv, () => this.state.capital, true);
+        this.buildNumericView("income", "Income ($)", statsDiv, () => this.getTotalIncome(), true);
         this.buildNumericView("hour", "Hour", statsDiv, () => this.state.hour);
         this.buildNumericView("day", "Day", statsDiv, () => this.state.day);
         this.buildNumericView("year", "Year", statsDiv, () => this.state.year);
@@ -136,6 +137,10 @@ class Game {
 
         // SAVE
         localStorage.setItem("state", JSON.stringify(this.state));
+    }
+
+    getTotalIncome() {
+        return (this.state.wageFactor * this.state.job.wage) - this.getTotalCosts();
     }
 
     getTotalCosts() {
