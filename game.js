@@ -69,7 +69,7 @@ class Game {
         this.buildNumericView("day", "Day", statsDiv, () => this.state.day);
         this.buildNumericView("year", "Year", statsDiv, () => this.state.year);
         this.buildNumericView("age", "Age", statsDiv, () => this.state.age, true);
-        this.buildNumericView("expenses", "Expenses", statsDiv, () => this.getTotalCosts(), true);
+        this.buildNumericView("expenses", "Expenses ($)", statsDiv, () => this.getTotalCosts(), true);
         this.buildNumericView("stress", "Stress", statsDiv, () => this.getTotalStress(), true);
 
         const jobDiv = document.createElement("div");
