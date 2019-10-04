@@ -60,6 +60,9 @@ class Game {
 
         // RENDER
         this.views.forEach(view => view.update());
+
+        // SAVE
+        localStorage.setItem("state", JSON.stringify(this.state));
     }
 
     updateCapital() {
@@ -86,6 +89,11 @@ class Game {
     // --- ENTRY POINT ---
 
     run() {
+        const savedState = JSON.parse(localStorage.getItem("state"));
+        if (savedState) {
+            this.state = savedState;
+        }
+
         this.initViews();
 
         setInterval(() => this.mainLoop(), 1000);
