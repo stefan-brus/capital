@@ -65,7 +65,8 @@ class Game {
     }
 
     buildAvailableJobsview(parentElement, updater) {
-        const view = new AvailableJobsView(parentElement, updater);
+        const onHire = job => this.state.job = job;
+        const view = new AvailableJobsView(parentElement, updater, onHire);
         view.create();
         view.update(true);
         this.views.push(view);
@@ -118,6 +119,7 @@ class Game {
         this.initViews();
 
         setInterval(() => this.mainLoop(), 1000);
+        this.mainLoop();
     }
 }
 

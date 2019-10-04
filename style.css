@@ -25,3 +25,10 @@
 .available-job-name-view {
     font-weight: bold;
 }
+
+/* Components */
+
+.button {
+    border: 1px solid black;
+    text-align: center;
+}

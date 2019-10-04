@@ -1,8 +1,9 @@
 class AvailableJobsView {
 
-    constructor(parentElement, updater) {
+    constructor(parentElement, updater, onHire) {
         this.parentElement = parentElement;
         this.updater = updater;
+        this.onHire = onHire;
         this.availableViews = [];
     }
 
@@ -26,7 +27,12 @@ class AvailableJobsView {
             }
 
             available.jobs.forEach((job, i) => {
-                const availableJobView = new AvailableJobView(this.containerElement, () => job);
+                const onAccept = () => {
+                    available.jobs.splice(i, 1);
+                    this.update(true);
+                    this.onHire(job);
+                }
+                const availableJobView = new AvailableJobView(this.containerElement, () => job, onAccept);
                 availableJobView.create(i);
                 this.availableViews.push(availableJobView);
             });
@@ -38,9 +44,10 @@ class AvailableJobsView {
 
 class AvailableJobView {
 
-    constructor(parentElement, updater) {
+    constructor(parentElement, updater, onAccept) {
         this.parentElement = parentElement;
         this.updater = updater;
+        this.onAccept = onAccept;
     }
 
     create(index = 0) {
@@ -60,6 +67,9 @@ class AvailableJobView {
 
         this.stressElement = new NumericView(`available-job-stress-${index}`, "Stress", this.containerElement, () => this.updater().stress, true);
         this.stressElement.create();
+
+        this.acceptButton = new Button("Accept", this.containerElement, this.onAccept);
+        this.acceptButton.create();
     }
 
     update() {

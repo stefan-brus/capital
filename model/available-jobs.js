@@ -28,12 +28,12 @@ class AvailableJobs {
  * - Decrease stress by 0.01
  * Negative actions:
  * - Decrease wage by 0.01 (note that wage cannot go below 0.01)
- * - Increase costs by 0.01
+ * - Increase costs by 0.01 (costs cannot go below 0.01)
  * - Increase stress by 0.01
  */
 
 function generateJob(level) {
-    const job = new Job(`Level ${level}`, `A level ${level} job`, 0.01, 0.00, 0.00);
+    const job = new Job(`Level ${level}`, `A level ${level} job`, 1, 0, 100);
     let points = level;
 
     const actions = [
@@ -41,23 +41,29 @@ function generateJob(level) {
         // POSITIVE
 
         () => {
-            job.wage += 0.01;
+            job.wage += 1;
             return true;
         },
         () => {
-            job.costs -= 0.01;
-            return true;
+            if (job.costs >= 1) {
+                job.costs -= 1;
+                return true;
+            }
+            else {
+                points--;
+                return false;
+            }
         },
         () => {
-            job.stress -= 0.01;
+            job.stress -= 1;
             return true;
         },
 
         // NEGATIVE
 
         () => {
-            if (job.wage >= 0.02) {
-                job.wage -= 0.01;
+            if (job.wage >= 2) {
+                job.wage -= 1;
                 return false;
             }
             else {
@@ -66,11 +72,11 @@ function generateJob(level) {
             }
         },
         () => {
-            job.costs += 0.01;
+            job.costs += 1;
             return false;
         },
         () => {
-            job.stress += 0.01;
+            job.stress += 1;
             return false;
         },
     ];
@@ -84,6 +90,10 @@ function generateJob(level) {
             points++;
         }
     }
+
+    job.wage /= 100.0;
+    job.costs /= 100.0;
+    job.stress /= 100.0;
 
     return job;
 }
