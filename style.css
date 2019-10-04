@@ -1,0 +1,17 @@
+/* Layout */
+
+#stats-layout {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+#job-layout {
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* Views */
+
+#job-name-view {
+    font-weight: bold;
+}
