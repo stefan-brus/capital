@@ -2,13 +2,15 @@
 - Serve everything with a HTTP server
 - Add networking mechanics:
   - Costs an initial investment of capital (doubles each time)
-  - Doubles costs of living for duration
-  - Doubles stress for duration
+  - Doubles total costs of living for duration
+  - Doubles total stress for duration
   - Duration is doubled each time
   - Increases available jobs max level by 1
+  - Permanently increases base stress by 0.01
 - Add education mechanics:
   - Halves wages for duration
-  - Doubles costs of living for duration
-  - Doubles stress for duration
+  - Doubles total costs of living for duration
+  - Doubles total stress for duration
   - Duration is doubled each time
   - Increases available jobs max level by 1
+  - Permanently increases base costs of living by 0.01

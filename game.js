@@ -4,7 +4,7 @@ class Game {
 
     constructor() {
         // TODO: Figure out better state version handling
-        const VERSION = 1;
+        const VERSION = 2;
         this.state = {};
         this.state.version = VERSION;
         this.state.capital = 0;
@@ -12,6 +12,8 @@ class Game {
         this.state.day = 0;
         this.state.year = 0;
         this.state.age = 18;
+        this.state.baseCosts = 0.01;
+        this.state.baseStress = 1.0;
 
         const unemployed = new Job(
             "Unemployed",
@@ -38,6 +40,8 @@ class Game {
         this.buildNumericView("day", "Day", statsDiv, () => this.state.day);
         this.buildNumericView("year", "Year", statsDiv, () => this.state.year);
         this.buildNumericView("age", "Age", statsDiv, () => this.state.age, true);
+        this.buildNumericView("expenses", "Expenses", statsDiv, () => this.getTotalCosts(), true);
+        this.buildNumericView("stress", "Stress", statsDiv, () => this.getTotalStress(), true);
 
         const jobDiv = document.createElement("div");
         jobDiv.id = "job-layout";
@@ -86,9 +90,17 @@ class Game {
         localStorage.setItem("state", JSON.stringify(this.state));
     }
 
+    getTotalCosts() {
+        return this.state.baseCosts + this.state.job.costs;
+    }
+
+    getTotalStress() {
+        return this.state.baseStress * this.state.job.stress;
+    }
+
     updateCapital() {
         this.state.capital += this.state.job.wage;
-        this.state.capital -= this.state.job.costs;
+        this.state.capital -= this.getTotalCosts();
     }
 
     updateTime() {
