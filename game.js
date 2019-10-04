@@ -117,13 +117,27 @@ class Game {
     run() {
         const savedState = JSON.parse(localStorage.getItem("state"));
         if (savedState && savedState.version == this.state.version) {
-            this.state = savedState;
+            this.loadSavedState(savedState);
         }
 
         this.initViews();
 
         setInterval(() => this.mainLoop(), 1000);
         this.mainLoop();
+    }
+
+    loadSavedState(saved) {
+        this.state.capital = saved.capital;
+        this.state.hour = saved.hour;
+        this.state.day = saved.day;
+        this.state.year = saved.year;
+        this.state.age = saved.age;
+        this.state.job = saved.job;
+
+        this.state.availableJobs.level = saved.availableJobs.level;
+        this.state.availableJobs.jobs = saved.availableJobs.jobs;
+        this.state.availableJobs.refreshCooldown = saved.availableJobs.refreshCooldown;
+        this.state.availableJobs.refreshTimer = saved.availableJobs.refreshTimer;
     }
 }
 
