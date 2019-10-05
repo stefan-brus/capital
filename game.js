@@ -186,7 +186,22 @@ class Game {
 
         this.state.age += this.getTotalStress() / (365 * 24);
 
-        if (this.state.availableJobs.refreshTimer > 0) {
+        function decrementOrZero(timer) {
+            if (timer <= 1.0) {
+                timer = 0;
+            }
+            else {
+                timer--;
+            }
+
+            return timer;
+        }
+
+        this.state.availableJobs.refreshTimer = decrementOrZero(this.state.availableJobs.refreshTimer);
+        this.state.career.networking.upgradeTimer = decrementOrZero(this.state.career.networking.upgradeTimer);
+        this.state.career.education.upgradeTimer = decrementOrZero(this.state.career.education.upgradeTimer);
+
+        /*if (this.state.availableJobs.refreshTimer > 0) {
             this.state.availableJobs.refreshTimer--;
         }
 
@@ -195,7 +210,7 @@ class Game {
         }
         if (this.state.career.education.upgradeTimer > 0) {
             this.state.career.education.upgradeTimer--;
-        }
+        }*/
     }
 
     // --- ENTRY POINT ---

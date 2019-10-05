@@ -16,6 +16,6 @@ class TimeRemainingView {
 
     update() {
         const val = this.updater();
-        this.element.textContent = `${this.label}: ${Math.floor(val / 24)}d ${val % 24}h`;
+        this.element.textContent = `${this.label}: ${Math.floor(val / 24)}d ${Math.floor(val % 24)}h`;
     }
 }
