@@ -222,7 +222,7 @@ class Game {
         this.state.career.education.upgradeTimer = saved.career.education.upgradeTimer;
         this.state.career.education.upgradeStarted = saved.career.education.upgradeStarted;
 
-        this.state.availableJobs.level = saved.availableJobs.level;
+        this.state.availableJobs.maxLevel = saved.availableJobs.maxLevel;
         this.state.availableJobs.jobs = saved.availableJobs.jobs;
         this.state.availableJobs.refreshCooldown = saved.availableJobs.refreshCooldown;
         this.state.availableJobs.refreshTimer = saved.availableJobs.refreshTimer;
