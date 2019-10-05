@@ -195,7 +195,6 @@ class Game {
         this.initViews();
 
         setInterval(() => this.mainLoop(), 1000);
-        this.mainLoop();
     }
 
     loadSavedState(saved) {

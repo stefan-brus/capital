@@ -13,8 +13,12 @@
 - Make buttons respond instantly
 - Add loan mechanics
   - Check every day rollover if capital is negative, if so take a loan to cover it, adds interest costs
+  - Loans will be displayed at the top, with interest rate, costs, and an option to pay parts of it back
 - Gradually enable career upgrades
   - Education becomes available at 10 or so capital
   - New career upgrades every 10x
 - Generate max number of available jobs based on the 2 logarithm of the max level
-- Halve the available jobs refresh duration every time a career upgrade is finished
+- Halve the available jobs refresh duration every time a career upgrade is finished (also refresh timer if running)
+- Add one time upgrades to career upgrades
+  - Idea: Savings account. Unlocks "passive income" feature with a basic savings account that generates interest (interest can be upgraded)
+- Put information text in tooltips
