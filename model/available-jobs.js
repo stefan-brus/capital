@@ -10,7 +10,7 @@ class AvailableJobs {
 
     generate() {
         this.jobs = [];
-        for(let i = 0; i < this.maxLevel + 1; i++) {
+        for(let i = 0; i < Math.floor(Math.log2(this.maxLevel)) + 1; i++) {
             const jobLevel = Math.floor(Math.random() * this.maxLevel) + 1;
             this.jobs.push(generateJob(jobLevel));
         }

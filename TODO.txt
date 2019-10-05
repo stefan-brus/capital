@@ -17,8 +17,12 @@
 - Gradually enable career upgrades
   - Education becomes available at 10 or so capital
   - New career upgrades every 10x
-- Generate max number of available jobs based on the 2 logarithm of the max level
 - Halve the available jobs refresh duration every time a career upgrade is finished (also refresh timer if running)
 - Add one time upgrades to career upgrades
   - Idea: Savings account. Unlocks "passive income" feature with a basic savings account that generates interest (interest can be upgraded)
 - Put information text in tooltips
+- Add reject button to available job
+- Add debug tools
+  - Should display in an overlay when "debug" is set in local storage, or perhaps given in the URL
+  - Possible tools:
+    - Reset all cooldowns
