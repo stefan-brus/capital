@@ -28,29 +28,43 @@ class Game {
 
         this.state.job = unemployed;
 
-        const onNetworkUpgrade = (networking) => {
-            this.state.capital -= networking.investment;
+        const onCareerUpgrade = () => {
             this.state.costsFactor *= 2.0;
             this.state.stressFactor *= 2.0;
+        }
+        const onCareerFinished = () => {
+            this.state.costsFactor *= 0.5;
+            this.state.stressFactor *= 0.5;
+            this.state.availableJobs.maxLevel++;
+
+            const isRefreshTimerTicking =
+                this.state.availableJobs.refreshTimer < this.state.availableJobs.refreshCooldown &&
+                this.state.availableJobs.refreshTimer > 0;
+            if (isRefreshTimerTicking) {
+                this.state.availableJobs.refreshTimer *= 0.5;
+            }
+            this.state.availableJobs.refreshCooldown *= 0.5;
+        }
+
+        const onNetworkUpgrade = (networking) => {
+            onCareerUpgrade();
+            this.state.capital -= networking.investment;
         };
         const onNetworkFinished = () => {
-            this.state.costsFactor *= 0.5;
-            this.state.stressFactor *= 0.5;
-            this.state.availableJobs.maxLevel++;
+            onCareerFinished();
             this.state.baseStress += 0.01;
         };
+
         const onEducationUpgrade = () => {
+            onCareerUpgrade();
             this.state.wageFactor *= 0.5;
-            this.state.costsFactor *= 2.0;
-            this.state.stressFactor *= 2.0;
         };
         const onEducationFinished = () => {
+            onCareerFinished();
             this.state.wageFactor *= 2.0;
-            this.state.costsFactor *= 0.5;
-            this.state.stressFactor *= 0.5;
-            this.state.availableJobs.maxLevel++;
             this.state.baseCosts += 0.01;
         };
+
         this.state.career = new Career(onNetworkUpgrade, onNetworkFinished, onEducationUpgrade, onEducationFinished);
 
         this.state.availableJobs = new AvailableJobs();
