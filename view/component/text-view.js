@@ -7,6 +7,7 @@ class TextView {
 
     create() {
         this.element = document.createElement("p");
+        this.element.className = "text-view";
         this.element.textContent = this.text;
         this.parentElement.appendChild(this.element);
     }
