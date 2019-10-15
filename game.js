@@ -82,6 +82,10 @@ class Game {
 
         this.buildLoansView(this.loansDiv, () => this.state.loans);
 
+        this.statsHeader = document.createElement("h2");
+        this.statsHeader.textContent = "You";
+        document.body.appendChild(this.statsHeader);
+
         const statsDiv = document.createElement("div");
         statsDiv.id = "stats-layout";
         document.body.appendChild(statsDiv);
