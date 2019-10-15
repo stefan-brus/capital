@@ -10,9 +10,8 @@ class CareerView {
         this.headerElement.textContent = "Career";
         this.parentElement.appendChild(this.headerElement);
 
-        const descElement = document.createElement("p");
-        descElement.textContent = "Each upgrade doubles costs & expenses for its duration";
-        this.parentElement.appendChild(descElement);
+        this.descElement = new TextView("Each upgrade doubles costs & expenses for its duration", this.parentElement);
+        this.descElement.create();
 
         const networkingDiv = document.createElement("div");
         networkingDiv.className = "career-component";
@@ -50,9 +49,8 @@ class NetworkingView {
         this.costView = new NumericView("career-networking-cost", "One-time investment ($)", this.parentElement, () => this.updater().investment, true);
         this.costView.create();
 
-        const penaltyElement = document.createElement("p");
-        penaltyElement.textContent = "Increases base stress";
-        this.parentElement.appendChild(penaltyElement);
+        this.penaltyElement = new TextView("Increases base stress", this.parentElement);
+        this.penaltyElement.create();
 
         this.timeRemainingView = new TimeRemainingView("career-networking-refresh", "Remaining", this.parentElement, () => this.updater().upgradeTimer);
         this.timeRemainingView.create();
@@ -94,13 +92,11 @@ class EducationView {
         this.headerElement.className = "career-name-view";
         this.parentElement.appendChild(this.headerElement);
 
-        const descElement = document.createElement("p");
-        descElement.textContent = "Halves wage income for duration";
-        this.parentElement.appendChild(descElement);
+        this.descElement = new TextView("Halves wage income for duration", this.parentElement);
+        this.descElement.create();
 
-        const penaltyElement = document.createElement("p");
-        penaltyElement.textContent = "Increases base expenses";
-        this.parentElement.appendChild(penaltyElement);
+        this.penaltyElement = new TextView("Increases base expenses", this.parentElement);
+        this.penaltyElement.create();
 
         this.timeRemainingView = new TimeRemainingView("career-education-refresh", "Remaining", this.parentElement, () => this.updater().upgradeTimer);
         this.timeRemainingView.create();
