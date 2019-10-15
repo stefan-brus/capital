@@ -21,6 +21,14 @@ class LoansView {
         this.amountView = new NumericView("loans-amount-view", "Loan amount ($)", this.parentElement, () => this.updater().baseAmount, true);
         this.amountView.create();
 
+        const onTakeLoan = () => {
+            this.updater().takeLoan();
+            this.update();
+        }
+
+        this.takeLoanButton = new Button("Take loan", this.parentElement, onTakeLoan);
+        this.takeLoanButton.create();
+
         this.containerElement = document.createElement("div");
         this.containerElement.id = "loans-container";
         this.parentElement.appendChild(this.containerElement);
