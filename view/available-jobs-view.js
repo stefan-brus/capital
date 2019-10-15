@@ -47,8 +47,8 @@ class AvailableJobsView {
             available.jobs.forEach((job, i) => {
                 const onAccept = () => {
                     available.jobs.splice(i, 1);
-                    this.update(true);
                     this.onHire(job);
+                    this.update(true);
                 }
 
                 const onReject = () => {

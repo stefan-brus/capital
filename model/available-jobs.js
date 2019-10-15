@@ -1,7 +1,6 @@
 class AvailableJobs {
 
     constructor() {
-        // TODO: Figure out level mechanics. Education/networking?
         this.maxLevel = 1;
         this.jobs = [];
         this.refreshCooldown = 24;

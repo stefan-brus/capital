@@ -28,6 +28,8 @@ class Game {
 
         this.state.job = unemployed;
 
+        this.state.loans = new Loans();
+
         const onCareerUpgrade = () => {
             this.state.costsFactor *= 2.0;
             this.state.stressFactor *= 2.0;
@@ -74,6 +76,12 @@ class Game {
     }
 
     initViews() {
+        this.loansDiv = document.createElement("div");
+        this.loansDiv.id = "loans-layout";
+        document.body.appendChild(this.loansDiv);
+
+        this.buildLoansView(this.loansDiv, () => this.state.loans);
+
         const statsDiv = document.createElement("div");
         statsDiv.id = "stats-layout";
         document.body.appendChild(statsDiv);
@@ -112,6 +120,14 @@ class Game {
         this.views.push(view);
     }
 
+    buildLoansView(parentElement, updater) {
+        const onRepayLoan = loan => this.state.capital -= loan.amount;
+        const view = new LoansView(parentElement, updater, onRepayLoan);
+        view.create();
+        view.update(true);
+        this.views.push(view);
+    }
+
     buildJobView(parentElement, updater) {
         const view = new JobView(parentElement, updater);
         view.create();
@@ -137,6 +153,7 @@ class Game {
     mainLoop() {
         // UPDATE
         this.updateCapital();
+        this.updateLoans();
         this.updateTime();
         this.state.career.finishCompletedUpgrades();
 
@@ -154,6 +171,7 @@ class Game {
         else {
             this.careerDiv.style.display = "inline";
         }
+
         this.views.forEach(view => view.update());
     }
 
@@ -172,6 +190,25 @@ class Game {
     updateCapital() {
         this.state.capital += this.state.wageFactor * this.state.job.wage;
         this.state.capital -= this.getTotalCosts();
+    }
+
+    updateLoans() {
+        // Update loan base amount
+        this.state.loans.baseAmount = this.getTotalCosts() * 10;
+
+        // Repay existing loans daily
+        if (this.state.hour == 0) {
+            this.state.loans.loans.forEach(loan => {
+                const payment = loan.amount * loan.interest;
+                this.state.capital -= payment;
+            });
+        }
+
+        // If capital is negative, take loans until positive
+        while (this.state.capital < 0) {
+            const loan = this.state.loans.takeLoan();
+            this.state.capital += loan.amount;
+        }
     }
 
     updateTime() {
@@ -204,17 +241,6 @@ class Game {
         this.state.availableJobs.refreshTimer = decrementOrZero(this.state.availableJobs.refreshTimer);
         this.state.career.networking.upgradeTimer = decrementOrZero(this.state.career.networking.upgradeTimer);
         this.state.career.education.upgradeTimer = decrementOrZero(this.state.career.education.upgradeTimer);
-
-        /*if (this.state.availableJobs.refreshTimer > 0) {
-            this.state.availableJobs.refreshTimer--;
-        }
-
-        if (this.state.career.networking.upgradeTimer > 0) {
-            this.state.career.networking.upgradeTimer--;
-        }
-        if (this.state.career.education.upgradeTimer > 0) {
-            this.state.career.education.upgradeTimer--;
-        }*/
     }
 
     // --- ENTRY POINT ---
@@ -243,6 +269,10 @@ class Game {
         this.state.stressFactor = saved.stressFactor;
 
         this.state.job = saved.job;
+
+        this.state.loans.interestRate = saved.loans.interestRate;
+        this.state.loans.baseAmount = saved.loans.baseAmount;
+        this.state.loans.loans = saved.loans.loans;
 
         this.state.career.networking.level = saved.career.networking.level;
         this.state.career.networking.duration = saved.career.networking.duration;
