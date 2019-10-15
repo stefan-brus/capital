@@ -125,8 +125,9 @@ class Game {
     }
 
     buildLoansView(parentElement, updater) {
-        const onRepayLoan = loan => this.state.capital -= loan.amount;
-        const view = new LoansView(parentElement, updater, onRepayLoan);
+        const onLoanRepaid = loan => this.state.capital -= loan.amount;
+        const onLoanTaken = loan => this.state.capital += loan.amount;
+        const view = new LoansView(parentElement, updater, onLoanRepaid, onLoanTaken);
         view.create();
         view.update(true);
         this.views.push(view);
@@ -201,7 +202,7 @@ class Game {
         this.state.loans.baseAmount = this.getTotalCosts() * 10;
 
         // Repay existing loans daily
-        if (this.state.hour == 0) {
+        if (this.state.hour == 23) {
             this.state.loans.loans.forEach(loan => {
                 const payment = loan.amount * loan.interest;
                 this.state.capital -= payment;

@@ -1,9 +1,10 @@
 class LoansView {
 
-    constructor(parentElement, updater, onRepayLoan) {
+    constructor(parentElement, updater, onLoanRepaid, onLoanTaken) {
         this.parentElement = parentElement;
         this.updater = updater;
-        this.onRepayLoan = onRepayLoan;
+        this.onLoanTaken = onLoanTaken;
+        this.onLoanRepaid = onLoanRepaid;
         this.loanViews = [];
     }
 
@@ -22,7 +23,8 @@ class LoansView {
         this.amountView.create();
 
         const onTakeLoan = () => {
-            this.updater().takeLoan();
+            const loan = this.updater().takeLoan();
+            this.onLoanTaken(loan);
             this.update();
         }
 
@@ -47,7 +49,7 @@ class LoansView {
             const onRepay = () => {
                 loans.repayLoan(i);
                 this.update(true);
-                this.onRepayLoan(loan);
+                this.onLoanRepaid(loan);
             }
 
             const loanView = new LoanView(this.containerElement, () => loan, onRepay);
