@@ -7,7 +7,7 @@ class Game {
         const VERSION = 3;
         this.state = {};
         this.state.version = VERSION;
-        this.state.capital = 0;
+        this.state.capital = 1;
         this.state.hour = 0;
         this.state.day = 0;
         this.state.year = 0;
