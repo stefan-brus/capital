@@ -1,5 +1,17 @@
 /* Layout */
 
+#left-container {
+    display: inline-block;
+    max-width: 50%;
+    margin-right: 10px;
+}
+
+#right-container {
+    display: inline-block;
+    max-width: 50%;
+    vertical-align: top;
+}
+
 #stats-layout {
     display: inline-block;
     margin-right: 10px;

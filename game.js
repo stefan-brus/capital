@@ -76,19 +76,23 @@ class Game {
     }
 
     initViews() {
+        this.leftContainer = document.createElement("div");
+        this.leftContainer.id = "left-container";
+        document.body.appendChild(this.leftContainer);
+
         this.loansDiv = document.createElement("div");
         this.loansDiv.id = "loans-layout";
-        document.body.appendChild(this.loansDiv);
+        this.leftContainer.appendChild(this.loansDiv);
 
         this.buildLoansView(this.loansDiv, () => this.state.loans);
 
         this.statsHeader = document.createElement("h2");
         this.statsHeader.textContent = "You";
-        document.body.appendChild(this.statsHeader);
+        this.leftContainer.appendChild(this.statsHeader);
 
         const statsDiv = document.createElement("div");
         statsDiv.id = "stats-layout";
-        document.body.appendChild(statsDiv);
+        this.leftContainer.appendChild(statsDiv);
 
         this.buildNumericView("capital", "Capital ($)", statsDiv, () => this.state.capital, true);
         this.buildNumericView("income", "Income ($)", statsDiv, () => this.getTotalIncome(), true);
@@ -101,21 +105,25 @@ class Game {
 
         const jobDiv = document.createElement("div");
         jobDiv.id = "job-layout";
-        document.body.appendChild(jobDiv);
+        this.leftContainer.appendChild(jobDiv);
 
         this.buildJobView(jobDiv, () => this.state.job);
 
         this.careerDiv = document.createElement("div");
         this.careerDiv.id = "career-layout";
-        document.body.appendChild(this.careerDiv);
+        this.leftContainer.appendChild(this.careerDiv);
 
         this.buildCareerView(this.careerDiv, () => this.state.career);
 
         const availableDiv = document.createElement("div");
         availableDiv.id = "available-jobs-layout";
-        document.body.appendChild(availableDiv);
+        this.leftContainer.appendChild(availableDiv);
 
         this.buildAvailableJobsview(availableDiv, () => this.state.availableJobs);
+
+        this.rightContainer = document.createElement("div");
+        this.rightContainer.id = "right-container";
+        document.body.appendChild(this.rightContainer);
     }
 
     buildNumericView(name, label, parentElement, updater, isDecimal = false) {
