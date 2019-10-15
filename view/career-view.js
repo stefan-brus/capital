@@ -11,7 +11,7 @@ class CareerView {
         this.parentElement.appendChild(this.headerElement);
 
         const descElement = document.createElement("p");
-        descElement.textContent = "Each upgrade doubles costs & stress for its duration";
+        descElement.textContent = "Each upgrade doubles costs & expenses for its duration";
         this.parentElement.appendChild(descElement);
 
         const networkingDiv = document.createElement("div");
