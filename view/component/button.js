@@ -3,7 +3,10 @@ class Button {
     constructor(label, parentElement, onClick) {
         this.label = label;
         this.parentElement = parentElement;
-        this.onClick = onClick;
+        this.onClick = () => {
+            onClick();
+            window.game.render();
+        }
     }
 
     create() {

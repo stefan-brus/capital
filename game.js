@@ -141,6 +141,13 @@ class Game {
         this.state.career.finishCompletedUpgrades();
 
         // RENDER
+        this.render();
+
+        // SAVE
+        localStorage.setItem("state", JSON.stringify(this.state));
+    }
+
+    render() {
         if (this.state.job.name == "Unemployed") {
             this.careerDiv.style.display = "none";
         }
@@ -148,9 +155,6 @@ class Game {
             this.careerDiv.style.display = "inline";
         }
         this.views.forEach(view => view.update());
-
-        // SAVE
-        localStorage.setItem("state", JSON.stringify(this.state));
     }
 
     getTotalIncome() {
@@ -261,7 +265,8 @@ class Game {
 window.onload = () => {
     const game = new Game();
 
-    // Put in global scope for debug purposes
+    // Put in global scope for all kinds of purposes
+    // Use this very carefully
     // TODO: Figure out if there is a better way to achieve this
     window.game = game;
 
