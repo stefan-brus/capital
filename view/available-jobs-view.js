@@ -50,7 +50,13 @@ class AvailableJobsView {
                     this.update(true);
                     this.onHire(job);
                 }
-                const availableJobView = new AvailableJobView(this.containerElement, () => job, onAccept);
+
+                const onReject = () => {
+                    available.jobs.splice(i, 1);
+                    this.update(true);
+                }
+
+                const availableJobView = new AvailableJobView(this.containerElement, () => job, onAccept, onReject);
                 availableJobView.create(i);
                 this.availableViews.push(availableJobView);
             });
@@ -73,10 +79,11 @@ class AvailableJobsView {
 
 class AvailableJobView {
 
-    constructor(parentElement, updater, onAccept) {
+    constructor(parentElement, updater, onAccept, onReject) {
         this.parentElement = parentElement;
         this.updater = updater;
         this.onAccept = onAccept;
+        this.onReject = onReject;
     }
 
     create(index = 0) {
@@ -99,6 +106,9 @@ class AvailableJobView {
 
         this.acceptButton = new Button("Accept", this.containerElement, this.onAccept);
         this.acceptButton.create();
+
+        this.rejectButton = new Button("Reject", this.containerElement, this.onReject);
+        this.rejectButton.create();
     }
 
     update() {
