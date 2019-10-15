@@ -10,7 +10,7 @@ class CareerView {
         this.headerElement.textContent = "Career";
         this.parentElement.appendChild(this.headerElement);
 
-        this.descElement = new TextView("Each upgrade doubles costs & expenses for its duration", this.parentElement);
+        this.descElement = new TextView("Each upgrade doubles stress & expenses for its duration", this.parentElement);
         this.descElement.create();
 
         const networkingDiv = document.createElement("div");
