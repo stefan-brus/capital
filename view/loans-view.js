@@ -12,6 +12,9 @@ class LoansView {
         this.headerElement.textContent = "Loans";
         this.parentElement.appendChild(this.headerElement);
 
+        this.infoView = new TextView("Intest is paid off daily", this.parentElement);
+        this.infoView.create();
+
         this.interestView = new NumericView("loans-interest-view", "Interest rate", this.parentElement, () => this.updater().interestRate, true);
         this.interestView.create();
 
