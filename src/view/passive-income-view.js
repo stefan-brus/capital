@@ -38,7 +38,7 @@ class SavingsAccountView {
         this.headerElement.textContent = "Savings Account";
         this.parentElement.appendChild(this.headerElement);
 
-        this.balanceView = new NumericView("savings-account-balance-view", "Balance", this.parentElement, () => this.updater().balance, true);
+        this.balanceView = new NumericView("savings-account-balance-view", "Balance ($)", this.parentElement, () => this.updater().balance, true);
         this.balanceView.create();
 
         this.interestView = new PercentView("savings-account-interest-view", "Daily interest", this.parentElement, () => this.updater().interest);
