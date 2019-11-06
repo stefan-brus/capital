@@ -97,25 +97,25 @@ class SavingsAccountActions {
         this.plusOneButton.create();
 
         const onTenPercent = () => {
-            this.amountInput.value = this.updater().balance * 0.1;
+            this.amountInput.value = (this.updater().balance * 0.1).toFixed(2);
         }
         this.tenPercentButton = new Button("10%", this.containerDiv, onTenPercent);
         this.tenPercentButton.create();
 
         const onQuarter = () => {
-            this.amountInput.value = this.updater().balance * 0.25;
+            this.amountInput.value = (this.updater().balance * 0.25).toFixed(2);
         }
         this.quarterButton = new Button("25%", this.containerDiv, onQuarter);
         this.quarterButton.create();
 
         const onHalf = () => {
-            this.amountInput.value = this.updater().balance * 0.5;
+            this.amountInput.value = (this.updater().balance * 0.5).toFixed(2);
         }
         this.halfButton = new Button("50%", this.containerDiv, onHalf);
         this.halfButton.create();
 
         const onThreeQuarters = () => {
-            this.amountInput.value = this.updater().balance * 0.75;
+            this.amountInput.value = (this.updater().balance * 0.75).toFixed(2);
         }
         this.threeQuartersButton = new Button("75%", this.containerDiv, onThreeQuarters);
         this.threeQuartersButton.create();
