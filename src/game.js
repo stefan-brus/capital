@@ -7,11 +7,11 @@ class Game {
         const VERSION = 3;
         this.state = {};
         this.state.version = VERSION;
-        this.state.capital = 1;
+        this.state.capital = 1.0;
         this.state.hour = 0;
         this.state.day = 0;
         this.state.year = 0;
-        this.state.age = 18;
+        this.state.age = 18.0;
         this.state.wageFactor = 1.0;
         this.state.baseCosts = 0.01;
         this.state.costsFactor = 1.0;
@@ -72,6 +72,8 @@ class Game {
         this.state.availableJobs = new AvailableJobs();
         this.state.availableJobs.generate();
 
+        this.state.passiveIncome = new PassiveIncome();
+
         this.views = [];
     }
 
@@ -124,6 +126,12 @@ class Game {
         this.rightContainer = document.createElement("div");
         this.rightContainer.id = "right-container";
         document.body.appendChild(this.rightContainer);
+
+        this.passiveIncomeDiv = document.createElement("div");
+        this.passiveIncomeDiv.id = "passive-income-layout";
+        this.rightContainer.appendChild(this.passiveIncomeDiv);
+
+        this.buildPassiveIncomeView(this.passiveIncomeDiv, () => this.state.passiveIncome)
     }
 
     buildNumericView(name, label, parentElement, updater, isDecimal = false) {
@@ -161,12 +169,34 @@ class Game {
         this.views.push(view);
     }
 
+    buildPassiveIncomeView(parentElement, updater) {
+        const savingsAccountEvents = {
+            onDeposit: amount => {
+                if (amount > this.state.capital) {
+                    return false;
+                }
+
+                this.state.capital -= amount;
+                return true;
+            },
+
+            onWithdraw: amount => {
+                this.state.capital += amount;
+            }
+        }
+        const view = new PassiveIncomeView(parentElement, updater, savingsAccountEvents);
+        view.create();
+        view.update();
+        this.views.push(view);
+    }
+
     // --- GAME LOGIC ---
 
     mainLoop() {
         // UPDATE
         this.updateCapital();
         this.updateLoans();
+        this.updatePassiveIncome();
         this.updateTime();
         this.state.career.finishCompletedUpgrades();
 
@@ -221,6 +251,12 @@ class Game {
         while (this.state.capital < 0) {
             const loan = this.state.loans.takeLoan();
             this.state.capital += loan.amount;
+        }
+    }
+
+    updatePassiveIncome() {
+        if (this.state.hour == 23) {
+            this.state.passiveIncome.onDailyUpdate();
         }
     }
 
@@ -286,6 +322,9 @@ class Game {
         this.state.loans.interestRate = saved.loans.interestRate;
         this.state.loans.baseAmount = saved.loans.baseAmount;
         this.state.loans.loans = saved.loans.loans;
+
+        this.state.passiveIncome.savingsAccount.balance = saved.passiveIncome.savingsAccount.balance;
+        this.state.passiveIncome.savingsAccount.interest = saved.passiveIncome.savingsAccount.interest;
 
         this.state.career.networking.level = saved.career.networking.level;
         this.state.career.networking.duration = saved.career.networking.duration;
