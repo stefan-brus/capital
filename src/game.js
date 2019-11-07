@@ -3,8 +3,6 @@ class Game {
     // --- INIT LOGIC ---
 
     constructor() {
-        // TODO: Figure out better state version handling
-        const VERSION = 4;
         this.state = {};
         this.state.version = VERSION;
         this.state.capital = 1.0;
@@ -78,9 +76,16 @@ class Game {
     }
 
     initViews() {
+        this.gameContainer = document.createElement("div");
+        document.body.appendChild(this.gameContainer);
+
+        this.headerElement = document.createElement("h1");
+        this.headerElement.textContent = "Capital";
+        this.gameContainer.appendChild(this.headerElement);
+
         this.leftContainer = document.createElement("div");
         this.leftContainer.id = "left-container";
-        document.body.appendChild(this.leftContainer);
+        this.gameContainer.appendChild(this.leftContainer);
 
         this.loansDiv = document.createElement("div");
         this.loansDiv.id = "loans-layout";
@@ -125,7 +130,7 @@ class Game {
 
         this.rightContainer = document.createElement("div");
         this.rightContainer.id = "right-container";
-        document.body.appendChild(this.rightContainer);
+        this.gameContainer.appendChild(this.rightContainer);
 
         this.passiveIncomeDiv = document.createElement("div");
         this.passiveIncomeDiv.id = "passive-income-layout";
