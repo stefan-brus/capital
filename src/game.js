@@ -4,7 +4,7 @@ class Game {
 
     constructor() {
         // TODO: Figure out better state version handling
-        const VERSION = 3;
+        const VERSION = 4;
         this.state = {};
         this.state.version = VERSION;
         this.state.capital = 1.0;
