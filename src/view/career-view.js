@@ -63,6 +63,8 @@ class NetworkingView {
     update() {
         const networking = this.updater();
 
+        this.parentElement.style.display = networking.isAvailable() ? null : "none";
+
         this.headerElement.textContent = `Networking level ${networking.level}`;
 
         this.costView.update();
@@ -108,6 +110,8 @@ class EducationView {
 
     update() {
         const education = this.updater();
+
+        this.parentElement.style.display = education.isAvailable() ? null : "none";
 
         this.headerElement.textContent = `Education level ${education.level}`;
 

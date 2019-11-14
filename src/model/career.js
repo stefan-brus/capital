@@ -1,8 +1,8 @@
 class Career {
 
-    constructor(onNetworkUpgrade, onNetworkFinished, onEducationUpgrade, onEducationFinished) {
-        this.networking = new Networking(onNetworkUpgrade, onNetworkFinished);
-        this.education = new Education(onEducationUpgrade, onEducationFinished);
+    constructor(onNetworkUpgrade, onNetworkFinished, isNetworkUnlocked, onEducationUpgrade, onEducationFinished, isEducationUnlocked) {
+        this.networking = new Networking(onNetworkUpgrade, onNetworkFinished, isNetworkUnlocked);
+        this.education = new Education(onEducationUpgrade, onEducationFinished, isEducationUnlocked);
     }
 
     finishCompletedUpgrades() {
@@ -18,7 +18,7 @@ class Career {
 
 class Networking {
 
-    constructor(onNetworkUpgrade, onNetworkFinished) {
+    constructor(onNetworkUpgrade, onNetworkFinished, isNetworkUnlocked) {
         this.onNetworkUpgrade = onNetworkUpgrade;
         this.onNetworkFinished = onNetworkFinished;
         this.level = 0;
@@ -26,6 +26,16 @@ class Networking {
         this.upgradeTimer = 0;
         this.upgradeStarted = false;
         this.investment = 1.0;
+        this.unlocked = isNetworkUnlocked;
+        this.available = false;
+    }
+
+    isAvailable() {
+        if (this.unlocked()) {
+            this.available = true;
+        }
+
+        return this.available;
     }
 
     upgrade() {
@@ -45,13 +55,23 @@ class Networking {
 
 class Education {
 
-    constructor(onEducationUpgrade, onEducationFinished) {
+    constructor(onEducationUpgrade, onEducationFinished, isEducationUnlocked) {
         this.onEducationUpgrade = onEducationUpgrade;
         this.onEducationFinished = onEducationFinished;
         this.level = 0;
         this.duration = 24;
         this.upgradeTimer = 0;
         this.upgradeStarted = false;
+        this.unlocked = isEducationUnlocked;
+        this.available = false;
+    }
+
+    isAvailable() {
+        if (this.unlocked()) {
+            this.available = true;
+        }
+
+        return this.available;
     }
 
     upgrade() {

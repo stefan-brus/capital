@@ -54,6 +54,9 @@ class Game {
             onCareerFinished();
             this.state.baseStress += 0.01;
         };
+        const isNetworkUnlocked = () => {
+            return this.state.job.name != "Unemployed";
+        };
 
         const onEducationUpgrade = () => {
             onCareerUpgrade();
@@ -64,8 +67,11 @@ class Game {
             this.state.wageFactor *= 2.0;
             this.state.baseCosts += 0.01;
         };
+        const isEducationUnlocked = () => {
+            return this.state.capital >= 10.0;
+        };
 
-        this.state.career = new Career(onNetworkUpgrade, onNetworkFinished, onEducationUpgrade, onEducationFinished);
+        this.state.career = new Career(onNetworkUpgrade, onNetworkFinished, isNetworkUnlocked, onEducationUpgrade, onEducationFinished, isEducationUnlocked);
 
         this.state.availableJobs = new AvailableJobs();
         this.state.availableJobs.generate();
@@ -214,10 +220,10 @@ class Game {
 
     render() {
         if (this.state.job.name == "Unemployed") {
-            this.careerDiv.style.display = "none";
+            this.passiveIncomeDiv.style.display = "none";
         }
         else {
-            this.careerDiv.style.display = "inline";
+            this.passiveIncomeDiv.style.display = "inline";
         }
 
         this.views.forEach(view => view.update());
