@@ -6,6 +6,7 @@ class LoansView {
         this.onLoanTaken = onLoanTaken;
         this.onLoanRepaid = onLoanRepaid;
         this.loanViews = [];
+        this.showLoans = true;
     }
 
     create() {
@@ -31,6 +32,14 @@ class LoansView {
         this.takeLoanButton = new Button("Take loan", this.parentElement, onTakeLoan);
         this.takeLoanButton.create();
 
+        const onShowHide = () => {
+            this.showLoans = !this.showLoans;
+            this.showHideButton.buttonDiv.textContent = this.showLoans ? "Hide" : "Show";
+        }
+
+        this.showHideButton = new Button("Hide", this.parentElement, onShowHide);
+        this.showHideButton.create();
+
         this.containerElement = document.createElement("div");
         this.containerElement.id = "loans-container";
         this.parentElement.appendChild(this.containerElement);
@@ -41,27 +50,31 @@ class LoansView {
 
         this.loanViews = [];
 
+        this.showHideButton.buttonDiv.style.display = loans.loans.length > 0 ? "inline-block" : "none";
+
         while (this.containerElement.firstChild) {
             this.containerElement.removeChild(this.containerElement.firstChild);
         }
 
-        loans.loans.forEach((loan, i) => {
-            const onRepay = () => {
-                loans.repayLoan(i);
-                this.update(true);
-                this.onLoanRepaid(loan);
-            }
+        if (this.showLoans) {
+            loans.loans.forEach((loan, i) => {
+                const onRepay = () => {
+                    loans.repayLoan(i);
+                    this.update(true);
+                    this.onLoanRepaid(loan);
+                }
 
-            const loanView = new LoanView(this.containerElement, () => loan, onRepay);
-            loanView.create(i);
-            this.loanViews.push(loanView);
-        });
+                const loanView = new LoanView(this.containerElement, () => loan, onRepay);
+                loanView.create(i);
+                this.loanViews.push(loanView);
+            });
+
+            this.loanViews.forEach(view => view.update());
+        }
 
         this.headerElement.textContent = `Loans (${loans.loans.length})`;
         this.interestView.update();
         this.amountView.update();
-
-        this.loanViews.forEach(view => view.update());
     }
 }
 
