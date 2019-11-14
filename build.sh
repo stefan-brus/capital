@@ -4,6 +4,7 @@ if [ "$1" == "release" ]; then
     VERSION=`grep -oP "const VERSION = \K[0-9]+" src/version.js`
     NEXT_VERSION=$((VERSION+1))
     echo "const VERSION = $NEXT_VERSION;" > src/version.js
+    git add src/version.js && git commit -m "Increment version for release" && git push origin master
 fi
 
 find src/ -name '*.js' -exec cat {} \; > dist/capital.js
