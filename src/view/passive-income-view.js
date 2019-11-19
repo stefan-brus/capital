@@ -141,7 +141,7 @@ class SavingsAccountView {
         const savings = this.updater();
         if (savings.balance >= savings.upgradeThreshold) {
             this.upgradeButton.buttonDiv.style.display = "inline-block";
-            this.upgradeButton.buttonDiv.textContent = `Upgrade ($${savings.upgradeThreshold})`;
+            this.upgradeButton.buttonDiv.textContent = `Upgrade ($${savings.upgradeThreshold.toFixed(2)})`;
         }
         else {
             this.upgradeButton.buttonDiv.style.display = "none";
