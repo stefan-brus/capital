@@ -340,6 +340,7 @@ class Game {
 
         this.state.passiveIncome.savingsAccount.balance = saved.passiveIncome.savingsAccount.balance;
         this.state.passiveIncome.savingsAccount.interest = saved.passiveIncome.savingsAccount.interest;
+        this.state.passiveIncome.savingsAccount.upgradeThreshold = saved.passiveIncome.savingsAccount.upgradeThreshold;
 
         this.state.career.networking.level = saved.career.networking.level;
         this.state.career.networking.duration = saved.career.networking.duration;
