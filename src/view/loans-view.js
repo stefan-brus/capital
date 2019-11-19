@@ -17,7 +17,7 @@ class LoansView {
         this.infoView = new TextView("Intest is paid off daily", this.parentElement);
         this.infoView.create();
 
-        this.interestView = new NumericView("loans-interest-view", "Interest rate", this.parentElement, () => this.updater().interestRate, true);
+        this.interestView = new PercentView("loans-interest-view", "Next loan interest rate", this.parentElement, () => this.updater().interestRate);
         this.interestView.create();
 
         this.amountView = new NumericView("loans-amount-view", "Loan amount ($)", this.parentElement, () => this.updater().baseAmount, true);
@@ -94,7 +94,7 @@ class LoanView {
         this.amountView = new NumericView(`loan-amount-${index}`, "Amount", this.containerElement, () => this.updater().amount, true);
         this.amountView.create();
 
-        this.interestView = new NumericView(`loan-interest-${index}`, "Interest", this.containerElement, () => this.updater().interest, true);
+        this.interestView = new PercentView(`loan-interest-${index}`, "Interest", this.containerElement, () => this.updater().interest);
         this.interestView.create();
 
         this.rejectButton = new Button("Repay", this.containerElement, this.onRepay);
