@@ -14,6 +14,7 @@ class SavingsAccount {
     constructor() {
         this.balance = 0.0;
         this.interest = 0.0001;
+        this.upgradeThreshold = 1.0;
     }
 
     withdraw(desiredAmount) {
@@ -24,6 +25,11 @@ class SavingsAccount {
 
     deposit(desiredAmount) {
         this.balance += desiredAmount;
+    }
+
+    upgrade() {
+        this.interest += 0.0001;
+        this.upgradeThreshold *= 10.0;
     }
 
     onDailyUpdate() {

@@ -15,7 +15,10 @@ class PassiveIncomeView {
         this.savingsAccountDiv.id = "savings-account-view";
         this.parentElement.appendChild(this.savingsAccountDiv);
 
-        this.savingsAccountView = new SavingsAccountView(this.savingsAccountDiv, () => this.updater().savingsAccount, this.savingsAccountEvents.onDeposit, this.savingsAccountEvents.onWithdraw);
+        this.savingsAccountView = new SavingsAccountView(this.savingsAccountDiv, () => this.updater().savingsAccount,
+            this.savingsAccountEvents.onDeposit,
+            this.savingsAccountEvents.onWithdraw,
+            this.savingsAccountEvents.onUpgrade);
         this.savingsAccountView.create();
     }
 
@@ -26,11 +29,12 @@ class PassiveIncomeView {
 
 class SavingsAccountView {
 
-    constructor(parentElement, updater, onDeposit, onWithdraw) {
+    constructor(parentElement, updater, onDeposit, onWithdraw, onUpgrade) {
         this.parentElement = parentElement;
         this.updater = updater;
         this.onDeposit = onDeposit;
         this.onWithdraw = onWithdraw;
+        this.onUpgrade = onUpgrade;
     }
 
     create() {
@@ -82,9 +86,6 @@ class SavingsAccountView {
         this.halfButton = new Button("50%", this.actionsDiv, onHalf);
         this.halfButton.create();
 
-        this.actionButtonsDiv = document.createElement("div");
-        this.parentElement.appendChild(this.actionButtonsDiv);
-
         const onThreeQuarters = () => {
             this.amountInput.value = (this.updater().balance * 0.75).toFixed(2);
         }
@@ -99,6 +100,9 @@ class SavingsAccountView {
             }
         }
 
+        this.actionButtonsDiv = document.createElement("div");
+        this.parentElement.appendChild(this.actionButtonsDiv);
+
         this.depositButton = new Button("Deposit", this.actionButtonsDiv, onDepositAction);
         this.depositButton.create();
 
@@ -111,10 +115,36 @@ class SavingsAccountView {
 
         this.withdrawButton = new Button("Withdraw", this.actionButtonsDiv, onWithdrawAction);
         this.withdrawButton.create();
+
+        this.upgradeDiv = document.createElement("div");
+        this.parentElement.appendChild(this.upgradeDiv);
+
+        this.upgradeView = new TextView("Next upgrade at $0.00 saved", this.upgradeDiv);
+        this.upgradeView.create();
+
+        const onUpgradeAction = () => {
+            this.onUpgrade(this.updater().upgradeThreshold);
+            this.updater().upgrade();
+            this.update();
+        }
+        this.upgradeButton = new Button("Upgrade ($0.00)", this.upgradeDiv, onUpgradeAction);
+        this.upgradeButton.create();
     }
 
     update() {
         this.balanceView.update();
         this.interestView.update();
+
+        this.upgradeView.text = `Next upgrade at $${this.updater().upgradeThreshold.toFixed(2)} saved`
+        this.upgradeView.update();
+
+        const savings = this.updater();
+        if (savings.balance >= savings.upgradeThreshold) {
+            this.upgradeButton.buttonDiv.style.display = "inline-block";
+            this.upgradeButton.buttonDiv.textContent = `Upgrade ($${savings.upgradeThreshold})`;
+        }
+        else {
+            this.upgradeButton.buttonDiv.style.display = "none";
+        }
     }
 }

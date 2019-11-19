@@ -193,6 +193,10 @@ class Game {
 
             onWithdraw: amount => {
                 this.state.capital += amount;
+            },
+
+            onUpgrade: amount => {
+                this.state.capital -= amount;
             }
         }
         const view = new PassiveIncomeView(parentElement, updater, savingsAccountEvents);

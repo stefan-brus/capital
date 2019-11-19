@@ -11,4 +11,8 @@ class TextView {
         this.element.textContent = this.text;
         this.parentElement.appendChild(this.element);
     }
+
+    update() {
+        this.element.textContent = this.text;
+    }
 }
