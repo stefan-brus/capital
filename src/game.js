@@ -347,11 +347,13 @@ class Game {
         this.state.career.networking.upgradeTimer = saved.career.networking.upgradeTimer;
         this.state.career.networking.upgradeStarted = saved.career.networking.upgradeStarted;
         this.state.career.networking.investment = saved.career.networking.investment;
+        this.state.career.networking.available = saved.career.networking.available;
 
         this.state.career.education.level = saved.career.education.level;
         this.state.career.education.duration = saved.career.education.duration;
         this.state.career.education.upgradeTimer = saved.career.education.upgradeTimer;
         this.state.career.education.upgradeStarted = saved.career.education.upgradeStarted;
+        this.state.career.education.available = saved.career.education.available;
 
         this.state.availableJobs.maxLevel = saved.availableJobs.maxLevel;
         this.state.availableJobs.jobs = saved.availableJobs.jobs;
